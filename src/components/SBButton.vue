@@ -31,6 +31,7 @@
 
 <script>
 export default {
+  name: 'SBButton',
   props: {
     label: String,
     color: String,

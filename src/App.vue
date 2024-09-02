@@ -1,22 +1,229 @@
+/* eslint-disable */
 <template>
-  <h1 class="text-3xl font-bold">Hello world! <i class="fa-solid fa-piggy-bank"></i></h1>
-  <br />
-  <sb-button blue> Teste</sb-button>
+  <div id="app">
+    <div class="bg-gray-900 h-full py-5">
+      <div class="container mx-auto">
+        <SBCard>
+          <img src="@/assets/silberback.png" />
+          <hr class="my-3" />
+          <SBTitle title="Vue Silverback">
+            <template v-slot:breadcrumb>
+              <SBBreadcrumb :bread="bread" />
+            </template>
+            <template v-slot:default>
+              <SBButton blue>Botão de Ação</SBButton>
+            </template>
+          </SBTitle>
+          <p>Componentes de Input</p>
+          <div class="grid grid-cols-4 gap-5 border-b pb-5">
+            <!-- Campos -->
+            <SBInput v-model="object.name" label="Nome" />
+            <SBInput v-model="object.money" label="Dinheiro" type="money" />
+            <SBInput v-model="object.mask" label="Mascara" mask="###.###.###-##" />
+            <SBInput v-model="object.Password" label="Senha" type="password" />
+            <SBInput v-model="object.counter" counter label="Contando" placeholder="Contador" />
+            <SBDate v-model="object.date" label="Data" />
+            <SBDate v-model="object.dateRange" label="Data com Range" range />
+            <SBSelect v-model="object.selectSimples" label="Select Simples" :items="selectSimples" />
+            <SBSelect v-model="object.selectObject" label="Select Objetos" :items="selectObject" />
+            <SBSelect v-model="object.selectList" multiple label="Select Multiplo" :items="selectSimples" />
+            <SBCheck v-model="object.check" label="Checkbox" status="Ativo" />
+            <SBRadioGroup label="Radio Group">
+              <SBRadio v-model="object.radio" label="Banana" value="Banana" />
+              <SBRadio v-model="object.radio" label="Maça" value="Maça" />
+              <SBRadio v-model="object.radio" label="Laranja" value="Laranja" />
+            </SBRadioGroup>
+          </div>
+          <div class="border-b py-5">
+            <SBTextArea label="Texto" />
+          </div>
+
+          <div class="grid grid-cols-4 gap-5">
+            <SBInput v-model="object.preIcon" label="Pre Icon" pre-icon="fa-wand-magic-sparkles" @preIconAction="modalExample = true" />
+            <SBInput v-model="object.posIcon" label="Pos Icon" pos-icon="fa-star" />
+          </div>
+
+          <SBRequiredLabel class="py-3" />
+
+          <SBForm v-model="valid">
+            <h1 class="py-5 text-xl font-bold">Formulário com Regras de validação no front</h1>
+            <div class="grid grid-cols-4 gap-5">
+              <SBInput v-model="object.rules1" label="Regras a" :rules="[isFarofa, isPequeno]" />
+              <SBInput v-model="object.rules2" label="Regras b" :rules="[isFarofa, isPequeno]" />
+            </div>
+          </SBForm>
+          <SBButton label="Salvar" blue icon="fa-solid fa-floppy-disk" :disabled="!valid" @click="testSend()" />
+
+          <h1 class="pt-5 bebas text-2xl border-t mt-5">TimeLine Componente</h1>
+          <SBTimeline class="p-5" :items="history">
+            <template v-slot:date="{ item }">
+              <div class="bg-blue-500 text-white rounded px-2 py-1">
+                {{ item.date }}
+              </div>
+            </template>
+            <template v-slot:box="{ item }">
+              <SBCard class="mb-5">
+                {{ item.box }}
+              </SBCard>
+            </template>
+          </SBTimeline>
+
+          <SBModal v-model="modalExample">
+            <template v-slot:default> ERRO </template>
+          </SBModal>
+        </SBCard>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
+import SBBreadcrumb from './components/SBBreadcrumb.vue'
+import SBButton from './components/SBButton.vue'
+import SBCalendar from './components/SBCalendar.vue'
+import SBCard from './components/SBCard.vue'
+import SBCheck from './components/SBCheck.vue'
+import SBDate from './components/SBDate.vue'
+import SBForm from './components/SBForm.vue'
+import SBIconButton from './components/SBIconButton.vue'
+import SBInput from './components/SBInput.vue'
+import SBInputZoom from './components/SBInputZoom.vue'
+import SBLabel from './components/SBLabel.vue'
+import SBLoader from './components/SBLoader.vue'
+import SBModal from './components/SBModal.vue'
+import SBNavButton from './components/SBNavButton.vue'
+import SBNavigationBar from './components/SBNavigationBar.vue'
+import SBRadio from './components/SBRadio.vue'
+import SBRadioGroup from './components/SBRadioGroup.vue'
+import SBSelect from './components/SBSelect.vue'
+import SBStatusCircle from './components/SBStatusCircle.vue'
+import SBStatusPill from './components/SBStatusPill.vue'
+import SBTable from './components/SBTable.vue'
+import SBTextArea from './components/SBTextArea.vue'
+import SBTimeline from './components/SBTimeline.vue'
+import SBTitle from './components/SBTitle.vue'
+import SBToast from './components/SBToast.vue'
+import SBToolTip from './components/SBToolTip.vue'
+
 export default {
+  components: {
+    SBBreadcrumb,
+    SBButton,
+    SBCalendar,
+    SBCard,
+    SBCheck,
+    SBDate,
+    SBForm,
+    SBIconButton,
+    SBInput,
+    SBInputZoom,
+    SBLabel,
+    SBLoader,
+    SBModal,
+    SBNavButton,
+    SBNavigationBar,
+    SBRadio,
+    SBRadioGroup,
+    SBSelect,
+    SBStatusCircle,
+    SBStatusPill,
+    SBTable,
+    SBTextArea,
+    SBTimeline,
+    SBTitle,
+    SBToast,
+    SBToolTip,
+  },
   name: 'App',
+  data: () => ({
+    bread: [
+      { title: 'Base', name: '' },
+      { title: 'Primatas', name: '' },
+    ],
+    route: 'screen',
+    typeName: 'Programa',
+    groupText: null,
+    object: {},
+    title: null,
+    loader: false,
+    selectSimples: [
+      'Atlético Mineiro',
+      'Bahia',
+      'Botafogo',
+      'Corinthians',
+      'Coritiba',
+      'Cruzeiro',
+      'Cuiabá',
+      'Flamengo',
+      'Fluminense',
+      'Fortaleza',
+      'Grêmio',
+      'Internacional',
+      'Palmeiras',
+      'Red Bull Bragantino',
+      'Santos',
+      'São Paulo',
+      'Vasco da Gama',
+      'América Mineiro',
+      'Athletico Paranaense',
+      'Goiás',
+    ],
+    selectObject: [
+      { label: 'Atlético Mineiro', value: 15 },
+      { label: 'Bahia', value: 4 },
+      { label: 'Botafogo', value: 9 },
+      { label: 'Corinthians', value: 30 },
+      { label: 'Coritiba', value: 6 },
+      { label: 'Cruzeiro', value: 21 },
+      { label: 'Cuiabá', value: 1 },
+      { label: 'Flamengo', value: 45 },
+      { label: 'Fluminense', value: 11 },
+      { label: 'Fortaleza', value: 7 },
+      { label: 'Grêmio', value: 15 },
+      { label: 'Internacional', value: 12 },
+      { label: 'Palmeiras', value: 36 },
+      { label: 'Red Bull Bragantino', value: 2 },
+      { label: 'Santos', value: 22 },
+      { label: 'São Paulo', value: 27 },
+      { label: 'Vasco da Gama', value: 20 },
+      { label: 'América Mineiro', value: 4 },
+      { label: 'Athletico Paranaense', value: 8 },
+      { label: 'Goiás', value: 4 },
+    ],
+    modalExample: false,
+    valid: false,
+    history: [
+      { date: '2024', box: 'Chere' },
+      { date: '2023', box: 'Chere' },
+      { date: '2022', box: 'Chere' },
+      { date: '2021', box: 'Chere' },
+      { date: '2020', box: 'Chere' },
+      { date: '2019', box: 'Chere' },
+      { date: '2018', box: 'Chere' },
+      { date: '2017', box: 'Chere' },
+      { date: '2016', box: 'Chere' },
+    ],
+  }),
+  methods: {
+    isFarofa(e) {
+      if (e == 'farofa') {
+        return false
+      } else {
+        return 'Não é farofa'
+      }
+    },
+    isPequeno(e) {
+      if (e && e.length > 3) {
+        return false
+      } else {
+        return 'Pouca Farofa'
+      }
+    },
+    testSend() {
+      if (!this.valid) {
+        this.modalExample = true
+      }
+    },
+  },
 }
 </script>
-
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
