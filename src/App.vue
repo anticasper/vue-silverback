@@ -4,7 +4,7 @@
     <div class="bg-gray-900 h-full py-5">
       <div class="container mx-auto">
         <SBCard>
-          <img src="@/assets/silberback.png" />
+          <img src="@/assets/silverback.png" />
           <hr class="my-3" />
           <SBTitle title="Vue Silverback">
             <template v-slot:breadcrumb>
