@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-white p-5 rounded-lg border">
+  <div class="bg-white rounded-lg border">
     <div class="text-4xl text-blue-700 pb-3" v-if="header">
       {{ header }}
     </div>
