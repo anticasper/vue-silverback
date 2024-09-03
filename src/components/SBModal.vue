@@ -1,7 +1,7 @@
 <template>
   <div tabindex="-1" class="py-10 overflow-x-hidden fixed z-50 w-screen h-[100vh] inset-0 bg-slate-400 bg-opacity-75 transition-opacity" v-if="inputValue">
     <div class="flex justify-center items-center p-4 w-full min-h-screen">
-      <TheCard :class="size">
+      <SBCard :class="size">
         <div class="flex justify-between pb-2 mb-3 border-b" v-if="header">
           <b>{{ title }}</b>
           <i class="fa-solid fa-x cursor-pointer" @click="update"></i>
@@ -12,14 +12,18 @@
         <div class="flex gap-3 justify-end pt-3 mt-3">
           <slot name="footer" />
         </div>
-      </TheCard>
+      </SBCard>
     </div>
   </div>
 </template>
 
 <script>
+import SBCard from '@/components/SBCard.vue'
 export default {
   name: 'SBModal',
+  components: {
+    SBCard,
+  },
   props: {
     title: String,
     modelValue: Boolean,
