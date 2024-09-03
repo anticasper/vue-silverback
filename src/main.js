@@ -26,6 +26,7 @@ import SBTimeline from '@/components/SBTimeline.vue'
 import SBTitle from '@/components/SBTitle.vue'
 import SBToast from '@/components/SBToast.vue'
 import SBToolTip from '@/components/SBToolTip.vue'
+import SBSpinner from '@/components/SBSpinner.vue'
 
 import { createApp } from 'vue'
 import App from './App.vue'
@@ -58,5 +59,6 @@ app.component('sb-timeline', SBTimeline)
 app.component('sb-title', SBTitle)
 app.component('sb-toast', SBToast)
 app.component('sb-tool-tip', SBToolTip)
+app.component('sb-spiiner', SBSpinner)
 
 app.mount('#app')

@@ -24,6 +24,7 @@ import SBTimeline from '@/components/SBTimeline.vue'
 import SBTitle from '@/components/SBTitle.vue'
 import SBToast from '@/components/SBToast.vue'
 import SBToolTip from '@/components/SBToolTip.vue'
+import SBSpinner from '@/components/SBSpinner.vue'
 
 const Components = {
   SBBreadcrumb,
@@ -52,6 +53,7 @@ const Components = {
   SBTitle,
   SBToast,
   SBToolTip,
+  SBSpinner,
 }
 
 const install = function (app) {
@@ -94,4 +96,5 @@ export {
   SBTitle,
   SBToast,
   SBToolTip,
+  SBSpinner,
 }
