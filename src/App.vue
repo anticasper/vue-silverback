@@ -47,6 +47,14 @@
           <SBSelect v-model="object.selectSimples" label="Select Simples" :items="selectSimples" />
           <SBSelect v-model="object.selectObject" label="Select Objetos" :items="selectObject" />
           <SBSelect v-model="object.selectList" multiple label="Select Multiplo" :items="selectSimples" />
+          <SBSelect v-model="object.selectCustom" label="Select Custom Props" prop-text="nome" prop-value="id" :items="pessoas" />
+          <SBSelect v-model="object.selectCustomOption" label="Select Custom Option" prop-text="nome" prop-value="id" :items="pessoas">
+            <template v-slot:option="{ item }"> {{ item.nome }} é um {{ item.classe }} </template>
+          </SBSelect>
+          <SBSelect v-model="object.selectCustomSelect" label="Select Custom Option e custom select" :items="pessoas">
+            <template v-slot:option="{ item }"> {{ item.nome }} é um {{ item.classe }} </template>
+            <template v-slot:selected="{ item }"> {{ item.nome }} torce para {{ item.time }}</template>
+          </SBSelect>
         </div>
         <h1 class="text-xl font-bold">Checkbox e Radio</h1>
         <div class="grid grid-cols-4 gap-5 border-y py-3 my-3">
@@ -75,6 +83,7 @@
         </SBForm>
         <SBButton label="Salvar" blue icon="fa-solid fa-floppy-disk" :disabled="!valid" @click="testSend()" />
         <SBButton label="Cancelar" red outlined icon="fa-solid fa-x" class="mx-2" />
+        <SBButton label="Pensar Melhor" yellow icon="fa-solid fa-x" />
       </SBCard>
 
       <SBCard class="my-5 p-5">
@@ -213,6 +222,28 @@ export default {
       { label: 'América Mineiro', value: 4 },
       { label: 'Athletico Paranaense', value: 8 },
       { label: 'Goiás', value: 4 },
+    ],
+    pessoas: [
+      { id: 1, nome: 'Carlos Silva', idade: 28, time: 'Flamengo', classe: 'Guerreiro' },
+      { id: 2, nome: 'Mariana Costa', idade: 22, time: 'São Paulo', classe: 'Maga' },
+      { id: 3, nome: 'João Pereira', idade: 35, time: 'Palmeiras', classe: 'Paladino' },
+      { id: 4, nome: 'Ana Souza', idade: 30, time: 'Corinthians', classe: 'Ladra' },
+      { id: 5, nome: 'Bruno Oliveira', idade: 27, time: 'Vasco', classe: 'Arqueiro' },
+      { id: 6, nome: 'Patrícia Mendes', idade: 24, time: 'Grêmio', classe: 'Barda' },
+      { id: 7, nome: 'Rafael Lima', idade: 32, time: 'Internacional', classe: 'Guerreiro' },
+      { id: 8, nome: 'Fernanda Rocha', idade: 26, time: 'Santos', classe: 'Druida' },
+      { id: 9, nome: 'Lucas Almeida', idade: 29, time: 'Cruzeiro', classe: 'Mago' },
+      { id: 10, nome: 'Julia Martins', idade: 21, time: 'Atlético Mineiro', classe: 'Feiticeira' },
+      { id: 11, nome: 'Thiago Santos', idade: 33, time: 'Botafogo', classe: 'Monge' },
+      { id: 12, nome: 'Larissa Fernandes', idade: 25, time: 'Fluminense', classe: 'Clériga' },
+      { id: 13, nome: 'Vinícius Gomes', idade: 31, time: 'Bahia', classe: 'Bárbaro' },
+      { id: 14, nome: 'Paula Ramos', idade: 23, time: 'Fortaleza', classe: 'Ranger' },
+      { id: 15, nome: 'Eduardo Cardoso', idade: 34, time: 'Sport', classe: 'Necromante' },
+      { id: 16, nome: 'Isabela Azevedo', idade: 20, time: 'Ceará', classe: 'Assassina' },
+      { id: 17, nome: 'André Vieira', idade: 28, time: 'Atlético Paranaense', classe: 'Cavaleiro' },
+      { id: 18, nome: 'Tatiana Souza', idade: 27, time: 'Chapecoense', classe: 'Caçadora' },
+      { id: 19, nome: 'Renato Dias', idade: 32, time: 'Coritiba', classe: 'Samurai' },
+      { id: 20, nome: 'Gabriela Monteiro', idade: 29, time: 'Avaí', classe: 'Bruxa' },
     ],
     modalExample: false,
     valid: false,

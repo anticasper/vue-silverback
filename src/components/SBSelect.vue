@@ -1,46 +1,33 @@
 <template>
   <div v-bind="$attrs" class="group py-1" @focusout="open = false" tabindex="-1">
     <SBLabel :label="label" :required="required" />
-    <div
-      class="flex items-center rounded-lg border text-black text-sm relative"
-      :class="[{ 'bg-slate-50': !disabled, 'bg-slate-100': disabled }]">
-      <div
-        :class="[{ 'py-3': !dense }, { 'py-2': dense }]"
-        class="px-2 grow cursor-pointer"
-        @click="openSelect()"
-        v-if="!multiple">
-        {{ text }}
+    <div class="flex items-center rounded-lg border text-black text-sm relative" :class="[{ 'bg-slate-50': !disabled, 'bg-slate-100': disabled }]">
+      <div :class="[{ 'py-3': !dense }, { 'py-2': dense }]" class="px-2 grow cursor-pointer" @click="openSelect()" v-if="!multiple">
+        <slot name="selected" :item="inputValue" v-if="inputValue"> {{ text }} </slot>
+        <span v-else>{{ text }}</span>
       </div>
-      <div
-        :class="[{ 'py-2': !dense }, { 'py-1': dense }]"
-        class="px-2 grow flex gap-1"
-        @click="openSelect()"
-        v-if="multiple">
+      <div :class="[{ 'py-2': !dense }, { 'py-1': dense }]" class="px-2 grow flex gap-1" @click="openSelect()" v-if="multiple">
         <div v-for="(item, i) in list" :key="i" class="">
           <span class="bg-gray-300 text-gray-800 rounded-lg py-1 px-2 text-xs" v-if="i <= 1">
             {{ item.label ?? item }} <i class="fa-solid fa-xmark cursor-pointer" @click="remove(i)"></i>
           </span>
-          <span class="bg-gray-300 text-gray-800 rounded-lg py-1 px-2 text-xs" v-if="i == 2">
-            +{{ list.length - 2 }}
-          </span>
+
+          <span class="bg-gray-300 text-gray-800 rounded-lg py-1 px-2 text-xs" v-if="i == 2"> +{{ list.length - 2 }} </span>
         </div>
       </div>
 
       <TransitionX>
-        <div
-          class="absolute top-full left-0 z-50 bg-white w-full max-h-32 border rounded-lg overflow-y-scroll"
-          v-if="open">
+        <div class="absolute top-full left-0 z-50 bg-white w-full max-h-32 border rounded-lg overflow-y-scroll" v-if="open">
           <div
             v-for="(item, index) in items"
             :key="index"
             class="p-2 hover:bg-slate-50 cursor-pointer flex gap-x-2 items-center"
             :class="[{ 'bg-slate-100': item.value ? item.value == inputValue : item == inputValue }]"
             @click="select(item)">
-            <div
-              class="size-4 rounded"
-              :class="[{ 'bg-blue-500': list.includes(item) }, { 'bg-gray-200': !list.includes(item) }]"
-              v-if="multiple" />
-            {{ item.label ?? item }}
+            <div class="size-4 rounded" :class="[{ 'bg-blue-500': list.includes(item) }, { 'bg-gray-200': !list.includes(item) }]" v-if="multiple" />
+            <slot name="option" :item="item">
+              {{ propText ? item[propText] : item.label ?? item }}
+            </slot>
           </div>
         </div>
       </TransitionX>
@@ -48,11 +35,7 @@
         <i class="fas fa-chevron-down" :class="{ 'rotated-icon-select': open }"></i>
       </span>
 
-      <span
-        :class="[{ 'py-3': !dense }, { 'py-2': dense }]"
-        class="px-2 border-l cursor-pointer"
-        @click="clear"
-        v-if="inputValue != null && !disabled && clearable">
+      <span :class="[{ 'py-3': !dense }, { 'py-2': dense }]" class="px-2 border-l cursor-pointer" @click="clear" v-if="inputValue != null && !disabled && clearable">
         <i class="fa-solid fa-xmark"></i>
       </span>
     </div>
@@ -87,6 +70,14 @@ export default {
       default: false,
     },
     items: Array,
+    propText: {
+      type: String,
+      default: null,
+    },
+    propValue: {
+      type: String,
+      default: null,
+    },
   },
 
   inheritAttrs: false,
@@ -109,20 +100,38 @@ export default {
     },
     select(item) {
       if (!this.multiple) {
-        this.inputValue = item.value ? item.value : item
-        this.text = item.label ? item.label : item
+        // Seta o valor do input para quando houver uma propriedade definida. Caso contrário tenta pela padrão e por fim seta o item completo
+        if (this.propValue) {
+          this.inputValue = item[this.propValue]
+        } else if (item.value) {
+          this.inputValue = item.value
+        } else {
+          this.inputValue = item
+        }
+        // Seta o valor do texto para quando houver uma propriedade definida. Caso contrário tenta pela padrão e por fim seta o item completo
+        if (this.propText) {
+          this.text = item[this.propText]
+        } else if (item.label) {
+          this.text = item.label
+        } else {
+          this.text = item
+        }
       } else {
-        if (
-          !this.list.some((listItem) => listItem.value === item.value && listItem.label === item.label) ||
-          !this.list.includes(item)
-        ) {
+        if (this.propValue) {
+          if (!this.list.some((listItem) => listItem[this.propValue] === item[this.propValue])) {
+            this.list.push(item)
+          }
+        } else if (item.value) {
+          if (!this.list.some((listItem) => listItem.value === item.value)) {
+            this.list.push(item)
+          }
+        } else if (!this.list.includes(item)) {
           this.list.push(item)
         } else {
           this.list = this.list.filter(function (el) {
             return el !== item
           })
         }
-
         this.inputValue = this.list
       }
       this.open = false
@@ -159,7 +168,9 @@ export default {
 
     setValue() {
       const object = this.items.find((el) => {
-        if (el.value) {
+        if (this.propValue) {
+          return el[this.propValue] == this.inputValue
+        } else if (el.value) {
           return el.value == this.inputValue
         } else {
           return el == this.inputValue
