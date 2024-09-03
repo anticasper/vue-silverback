@@ -1,78 +1,92 @@
 /* eslint-disable */
 <template>
-  <div id="app">
-    <div class="bg-gray-900 h-full py-5">
-      <div class="container mx-auto">
-        <SBCard>
-          <img src="@/assets/silverback.png" />
-          <hr class="my-3" />
-          <SBTitle title="Vue Silverback">
-            <template v-slot:breadcrumb>
-              <SBBreadcrumb :bread="bread" />
-            </template>
-            <template v-slot:default>
-              <SBButton blue>Botão de Ação</SBButton>
-            </template>
-          </SBTitle>
-          <p>Componentes de Input</p>
-          <div class="grid grid-cols-4 gap-5 border-b pb-5">
-            <!-- Campos -->
-            <SBInput v-model="object.name" label="Nome" />
-            <SBInput v-model="object.money" label="Dinheiro" type="money" />
-            <SBInput v-model="object.mask" label="Mascara" mask="###.###.###-##" />
-            <SBInput v-model="object.Password" label="Senha" type="password" />
-            <SBInput v-model="object.counter" counter label="Contando" placeholder="Contador" />
-            <SBDate v-model="object.date" label="Data" />
-            <SBDate v-model="object.dateRange" label="Data com Range" range />
-            <SBSelect v-model="object.selectSimples" label="Select Simples" :items="selectSimples" />
-            <SBSelect v-model="object.selectObject" label="Select Objetos" :items="selectObject" />
-            <SBSelect v-model="object.selectList" multiple label="Select Multiplo" :items="selectSimples" />
-            <SBCheck v-model="object.check" label="Checkbox" status="Ativo" />
-            <SBRadioGroup label="Radio Group">
-              <SBRadio v-model="object.radio" label="Banana" value="Banana" />
-              <SBRadio v-model="object.radio" label="Maça" value="Maça" />
-              <SBRadio v-model="object.radio" label="Laranja" value="Laranja" />
-            </SBRadioGroup>
-          </div>
-          <div class="border-b py-5">
-            <SBTextArea label="Texto" />
-          </div>
+  <div class="bg-gray-900 h-full py-5">
+    <div class="container mx-auto">
+      <SBCard>
+        <img src="@/assets/silverback.png" />
+        <hr class="my-3" />
+        <SBTitle title="Vue Silverback">
+          <template v-slot:breadcrumb>
+            <SBBreadcrumb :bread="bread" />
+          </template>
+          <template v-slot:default>
+            <SBButton blue>Botão de Ação</SBButton>
+          </template>
+        </SBTitle>
+        <h1 class="text-xl font-bold">Input</h1>
+        {{ object.mask }}
+        <div class="grid grid-cols-4 gap-5 border-y py-3 my-3">
+          <!-- Campos -->
+          <SBInput v-model="object.basic" label="Input Básico" />
+          <SBInput v-model="object.money" label="Input Dinheiro" type="money" />
+          <SBInput v-model="object.mask" label="Input com Mascara" mask="###.###.###-##" />
+          <SBInput v-model="object.password" label="Input Senha" type="password" />
+          <SBInput v-model="object.counter" counter label="Input com Contandor" placeholder="Contador com limite" />
+          <SBInput v-model="object.counterMax" counter :maxlength="10" label="Input com Contandor Máximo" placeholder="Contador com limite" />
+          <SBInput v-model="object.counterMin" counter :minlength="10" label="Input com Contandor Mínimo" placeholder="Contador com limite" />
+          <SBInput v-model="object.counterMinMax" counter :minlength="5" :maxlength="10" label="Input com Max e Mínimo" placeholder="Contador com limite" />
+          <SBInput v-model="object.preIcon" label="Pre Icon" pre-icon="fa-wand-magic-sparkles" />
+          <SBInput v-model="object.posIcon" label="Pos Icon" pos-icon="fa-star" />
+          <SBInput v-model="object.posPreIcon" label="All Icon" pre-icon="fa-wand-magic-sparkles" pos-icon="fa-star" />
+          <SBInput v-model="object.dense" dense label="Input Denso" />
+          <SBInput v-model="object.outlined" outlined label="Input Outlined" />
+        </div>
+        <div class="grid grid-cols-4 gap-5 border-b py-3 my-3">
+          <SBInput v-model="object.bgColor" bg-color="bg-blue-500" dark label="Input BG Cor Nomeado" />
+          <SBInput v-model="object.borderColor" border-color="border-yellow-400" label="Input Outlined - Borda com cor nomeada" />
+          <SBInput v-model="object.bgColor" bg-color="bg-blue-200" border-color="border-red-500" dark label="Input BG e Borda cor Nomeado" />
+          <SBInput v-model="object.bgColorIcon" bg-color="bg-blue-500" pre-icon="fa-wand-magic-sparkles" dark label="Input BG Cor Nomeado e Icon" />
+        </div>
+        <h1 class="text-xl font-bold">DatePicker</h1>
+        <div class="grid grid-cols-4 gap-5 border-y py-3 my-3">
+          <SBDate v-model="object.date" label="Data" />
+          <SBDate v-model="object.dateRange" label="Data com Range" range />
+          <SBSelect v-model="object.selectSimples" label="Select Simples" :items="selectSimples" />
+          <SBSelect v-model="object.selectObject" label="Select Objetos" :items="selectObject" />
+          <SBSelect v-model="object.selectList" multiple label="Select Multiplo" :items="selectSimples" />
+          <SBCheck v-model="object.check" label="Checkbox" status="Ativo" />
+          <SBRadioGroup label="Radio Group">
+            <SBRadio v-model="object.radio" label="Banana" value="Banana" />
+            <SBRadio v-model="object.radio" label="Maça" value="Maça" />
+            <SBRadio v-model="object.radio" label="Laranja" value="Laranja" />
+          </SBRadioGroup>
+        </div>
+        <h1 class="text-xl font-bold">Textarea</h1>
+        <div class="border-y py-3 my-3">
+          <SBTextArea label="Texto" />
+        </div>
 
+        <div class="grid grid-cols-4 gap-5"></div>
+
+        <SBRequiredLabel class="py-3" />
+
+        <SBForm v-model="valid" class="mb-3">
+          <h1 class="py-5 text-xl font-bold">Formulário com Regras de validação no front</h1>
           <div class="grid grid-cols-4 gap-5">
-            <SBInput v-model="object.preIcon" label="Pre Icon" pre-icon="fa-wand-magic-sparkles" @preIconAction="modalExample = true" />
-            <SBInput v-model="object.posIcon" label="Pos Icon" pos-icon="fa-star" />
+            <SBInput v-model="object.rules1" label="Regras a" :rules="[isFarofa, isPequeno]" />
+            <SBInput v-model="object.rules2" label="Regras b" :rules="[isMonkey]" />
           </div>
+        </SBForm>
+        <SBButton label="Salvar" blue icon="fa-solid fa-floppy-disk" :disabled="!valid" @click="testSend()" />
 
-          <SBRequiredLabel class="py-3" />
-
-          <SBForm v-model="valid">
-            <h1 class="py-5 text-xl font-bold">Formulário com Regras de validação no front</h1>
-            <div class="grid grid-cols-4 gap-5">
-              <SBInput v-model="object.rules1" label="Regras a" :rules="[isFarofa, isPequeno]" />
-              <SBInput v-model="object.rules2" label="Regras b" :rules="[isFarofa, isPequeno]" />
+        <h1 class="pt-5 text-2xl border-t mt-5">TimeLine Componente</h1>
+        <SBTimeline class="p-5" :items="history">
+          <template v-slot:date="{ item }">
+            <div class="bg-blue-500 text-white rounded px-2 py-1">
+              {{ item.date }}
             </div>
-          </SBForm>
-          <SBButton label="Salvar" blue icon="fa-solid fa-floppy-disk" :disabled="!valid" @click="testSend()" />
+          </template>
+          <template v-slot:box="{ item }">
+            <SBCard class="mb-5">
+              {{ item.box }}
+            </SBCard>
+          </template>
+        </SBTimeline>
 
-          <h1 class="pt-5 bebas text-2xl border-t mt-5">TimeLine Componente</h1>
-          <SBTimeline class="p-5" :items="history">
-            <template v-slot:date="{ item }">
-              <div class="bg-blue-500 text-white rounded px-2 py-1">
-                {{ item.date }}
-              </div>
-            </template>
-            <template v-slot:box="{ item }">
-              <SBCard class="mb-5">
-                {{ item.box }}
-              </SBCard>
-            </template>
-          </SBTimeline>
-
-          <SBModal v-model="modalExample">
-            <template v-slot:default> ERRO </template>
-          </SBModal>
-        </SBCard>
-      </div>
+        <SBModal v-model="modalExample">
+          <template v-slot:default> ERRO </template>
+        </SBModal>
+      </SBCard>
     </div>
   </div>
 </template>
@@ -210,6 +224,13 @@ export default {
         return false
       } else {
         return 'Não é farofa'
+      }
+    },
+    isMonkey(e) {
+      if (e == 'macaco') {
+        return false
+      } else {
+        return 'Não é Macaco'
       }
     },
     isPequeno(e) {

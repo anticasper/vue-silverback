@@ -2,15 +2,26 @@
   <div v-bind="$attrs" class="group py-1">
     <div class="flex justify-between items-center">
       <SBLabel :label="label" :required="required" />
-      <div class="text-xs bg-slate-50 p-1 border rounded" v-if="counter && inputValue">
+      <div class="text-xs text-gray-300" :class="[{ 'text-red-300': minlength && inputValue && inputValue.length < minlength }]" v-if="counter && inputValue">
         {{ inputValue.length }}
+        <span v-if="maxlength"> /{{ maxlength }}</span>
       </div>
     </div>
-    <div class="flex items-center rounded-lg border text-black text-sm overflow-hidden" :class="[{ 'bg-slate-50': !disabled, 'bg-slate-100': disabled, 'border-red-500': error }]">
-      <div v-if="preIcon" class="w-12 p-3 text-center border-r" :class="[{ 'cursor-pointer': hasPreIconAction }]" @click="dispatchPreIconAction()">
+    <div
+      class="flex items-center rounded-lg border text-sm overflow-hidden"
+      :class="[
+        { 'bg-slate-50': !disabled && !outlined && !bgColor, 'bg-slate-100': disabled, 'border-red-500': error, 'text-black': !dark, 'text-white': dark },
+        borderColorComputed,
+        bgColorComputed,
+      ]">
+      <div
+        v-if="preIcon"
+        class="w-12 p-3 text-center border-r"
+        :class="[{ 'cursor-pointer': hasPreIconAction }, { 'py-3': !dense }, { 'py-2': dense }]"
+        @click="dispatchPreIconAction()">
         <i class="fa-solid" :class="[preIcon]" />
       </div>
-      <div class="w-12 p-3 text-center border-r" v-if="type == 'money'">R$</div>
+      <div class="w-12 text-center border-r" :class="[{ 'py-3': !dense }, { 'py-2': dense }]" v-if="type == 'money'">R$</div>
       <input
         v-model="inputValue"
         :disabled="disabled"
@@ -20,14 +31,20 @@
         :minlength="minlength"
         :maxlength="maxlength"
         class="grow focus:outline-none focus:ring-0 p-3"
-        :class="[{ 'bg-slate-50': !disabled, 'bg-slate-100': disabled }]"
+        :class="[{ 'bg-slate-50': !disabled && !outlined && !bgColor, 'bg-slate-100': disabled, 'py-3': !dense, 'py-2': dense }, bgColorComputed]"
         @blur="updateValue"
         @keydown.enter.prevent="emitEnter"
+        @keypress="handleMask"
+        @keydown="handleMask"
         @keyup="handleMask" />
-      <div v-if="posIcon" class="w-12 p-3 text-center border-l" :class="[{ 'cursor-pointer': hasPosIconAction }]" @click="dispatchPosIconAction()">
+      <div
+        v-if="posIcon"
+        class="w-12 text-center border-l"
+        :class="[{ 'cursor-pointer': hasPosIconAction }, { 'py-3': !dense }, { 'py-2': dense }]"
+        @click="dispatchPosIconAction()">
         <i class="fa-solid" :class="[posIcon]" />
       </div>
-      <div v-if="type == 'password'" class="w-12 p-3 text-center border-l cursor-pointer" @click="updateType()">
+      <div v-if="type == 'password'" class="w-12 text-center border-l cursor-pointer" :class="[{ 'py-3': !dense }, { 'py-2': dense }]" @click="updateType()">
         <i class="fa-solid fa-eye" v-if="secret == 'password'" />
         <i class="fa-solid fa-eye-slash" v-else />
       </div>
@@ -50,7 +67,21 @@ export default {
       type: Boolean,
       default: false,
     },
+    dense: {
+      type: Boolean,
+      default: false,
+    },
+    outlined: {
+      type: Boolean,
+      default: false,
+    },
+    dark: {
+      type: Boolean,
+      default: false,
+    },
     label: String,
+    borderColor: String,
+    bgColor: String,
     maxlength: String,
     minlength: String,
     modelValue: [String, Number],
@@ -93,11 +124,13 @@ export default {
     errorMessage: [],
     secret: 'password',
     indice: null,
+    borderColorComputed: null,
+    bgColorComputed: null,
   }),
 
   methods: {
     handleMask() {
-      if (!this.mask) {
+      if (!this.mask || !this.inputValue) {
         return
       }
 
@@ -205,6 +238,15 @@ export default {
 
   created() {
     this.inputValue = this.modelValue
+  },
+  mounted() {
+    if (this.borderColor && this.borderColor.includes('border')) {
+      this.borderColorComputed = this.borderColor
+    }
+
+    if (this.bgColor && this.bgColor.includes('bg')) {
+      this.bgColorComputed = this.bgColor
+    }
   },
 }
 </script>
