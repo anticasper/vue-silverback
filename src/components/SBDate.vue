@@ -16,49 +16,54 @@
       <div class="w-12 p-3 text-center border-l cursor-pointer" v-if="inputValue" @click="clear()">
         <i class="fa-solid fa-x"></i>
       </div>
-      <div class="absolute top-full w-full max-w-[640px] bg-white border rounded p-4 z-50 mt-2" v-if="open">
-        <div class="flex border-b pb-3">
-          <div class="grow font-bold">
-            <span class="capitalize">{{ targetDate?.toLocaleString('default', { month: 'long' }) }}</span> de
-            {{ targetDate?.toLocaleString('default', { year: 'numeric' }) }}
+      <TransitionX>
+        <div class="absolute top-full w-full max-w-[640px] bg-white border rounded p-4 z-50 mt-2" v-if="open">
+          <div class="flex border-b pb-3">
+            <div class="grow font-bold">
+              <span class="capitalize">{{ targetDate?.toLocaleString('default', { month: 'long' }) }}</span> de
+              {{ targetDate?.toLocaleString('default', { year: 'numeric' }) }}
+            </div>
+            <div class="w-8 text-center cursor-pointer hover:bg-slate-50" @click="subtractOneMonth">
+              <i class="fa-solid fa-chevron-left"></i>
+            </div>
+            <div class="w-8 text-center cursor-pointer hover:bg-slate-50" @click="addOneMonth">
+              <i class="fa-solid fa-chevron-right"></i>
+            </div>
           </div>
-          <div class="w-8 text-center cursor-pointer hover:bg-slate-50" @click="subtractOneMonth">
-            <i class="fa-solid fa-chevron-left"></i>
-          </div>
-          <div class="w-8 text-center cursor-pointer hover:bg-slate-50" @click="addOneMonth">
-            <i class="fa-solid fa-chevron-right"></i>
-          </div>
-        </div>
-        <div class="pt-3">
-          <div class="grid grid-cols-7 pb-2">
-            <div class="text-center font-bold">DOM</div>
-            <div class="text-center font-bold">SEG</div>
-            <div class="text-center font-bold">TER</div>
-            <div class="text-center font-bold">QUA</div>
-            <div class="text-center font-bold">QUI</div>
-            <div class="text-center font-bold">SEX</div>
-            <div class="text-center font-bold">SAB</div>
-          </div>
+          <div class="pt-3">
+            <div class="grid grid-cols-7 pb-2">
+              <div class="text-center font-bold">DOM</div>
+              <div class="text-center font-bold">SEG</div>
+              <div class="text-center font-bold">TER</div>
+              <div class="text-center font-bold">QUA</div>
+              <div class="text-center font-bold">QUI</div>
+              <div class="text-center font-bold">SEX</div>
+              <div class="text-center font-bold">SAB</div>
+            </div>
 
-          <div class="grid grid-cols-7">
-            <div
-              v-for="(day, i) in calendario"
-              :key="i"
-              class="h-8 flex items-center justify-center text-center cursor-pointer"
-              :class="[{ 'text-red-500 bg-slate-100': day.getMonth() != targetDate.getMonth() }, { 'bg-blue-400 text-white': inDateRange(day.toISOString().substring(0, 10)) }]"
-              @click="setDate(day)">
-              <span
-                class="rounded-full size-8 flex items-center justify-center hover:bg-blue-500 hover:text-white"
+            <div class="grid grid-cols-7">
+              <div
+                v-for="(day, i) in calendario"
+                :key="i"
+                class="h-8 flex items-center justify-center text-center cursor-pointer"
                 :class="[
-                  { 'bg-blue-500 text-white ': inputValue === day.toISOString().substring(0, 10) },
-                  { 'bg-slate-200': day.toISOString().substring(0, 10) == today.toISOString().substring(0, 10) },
-                ]">
-                {{ day.getDate() }}
-              </span>
+                  { 'text-red-500 bg-slate-100': day.getMonth() != targetDate.getMonth() },
+                  { 'bg-blue-400 text-white': inDateRange(day.toISOString().substring(0, 10)) },
+                ]"
+                @click="setDate(day)">
+                <span
+                  class="rounded-full size-8 flex items-center justify-center hover:bg-blue-500 hover:text-white"
+                  :class="[
+                    { 'bg-blue-500 text-white ': inputValue === day.toISOString().substring(0, 10) },
+                    { 'bg-slate-200': day.toISOString().substring(0, 10) == today.toISOString().substring(0, 10) },
+                  ]">
+                  {{ day.getDate() }}
+                </span>
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      </TransitionX>
     </div>
     <div class="text-red-500 text-sm py-1 px-2" v-if="hasError">
       <i class="fa-solid fa-triangle-exclamation" />
@@ -70,11 +75,13 @@
 <script>
 import { defineComponent } from 'vue'
 import SBLabel from '@/components/SBLabel.vue'
+import TransitionX from '@/components/TransitionX.vue'
 
 export default defineComponent({
   name: 'SBDate',
   components: {
     SBLabel,
+    TransitionX,
   },
   data: () => ({
     inputValue: '',
