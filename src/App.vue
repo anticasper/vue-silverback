@@ -50,8 +50,8 @@
         <SBSpinner color="purple" />
         <SBSpinner color="red" />
         <SBSpinner color="699bf7" />
-        <SBSpinner color="51414F" label="Analizando dados..." />
-        <SBSpinner color="953553" label="Analizando dados..." />
+        <SBSpinner color="51414F" label="Analisando dados..." />
+        <SBSpinner color="953553" label="Analisando dados..." />
 
         <div class="grid grid-cols-4 gap-5 border-b py-3 my-3">
           <SBInput v-model="object.bgColor" bg-color="bg-blue-500" dark label="Input BG Cor Nomeado" />
