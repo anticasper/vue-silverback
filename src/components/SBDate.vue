@@ -44,15 +44,17 @@
             <div
               v-for="(day, i) in calendario"
               :key="i"
-              class="h-8 flex items-center justify-center text-center hover:bg-blue-500 hover:text-white cursor-pointer"
-              :class="[
-                { 'bg-blue-500 text-white': inputValue === day.toISOString().substring(0, 10) },
-                { 'bg-slate-200': day.toISOString().substring(0, 10) == today.toISOString().substring(0, 10) },
-                { 'text-red-500 bg-slate-100': day.getMonth() != targetDate.getMonth() },
-                { 'bg-blue-400 text-white': inDateRange(day.toISOString().substring(0, 10)) },
-              ]"
+              class="h-8 flex items-center justify-center text-center cursor-pointer"
+              :class="[{ 'text-red-500 bg-slate-100': day.getMonth() != targetDate.getMonth() }, { 'bg-blue-400 text-white': inDateRange(day.toISOString().substring(0, 10)) }]"
               @click="setDate(day)">
-              {{ day.getDate() }}
+              <span
+                class="rounded-full size-8 flex items-center justify-center hover:bg-blue-500 hover:text-white"
+                :class="[
+                  { 'bg-blue-500 text-white ': inputValue === day.toISOString().substring(0, 10) },
+                  { 'bg-slate-200': day.toISOString().substring(0, 10) == today.toISOString().substring(0, 10) },
+                ]">
+                {{ day.getDate() }}
+              </span>
             </div>
           </div>
         </div>

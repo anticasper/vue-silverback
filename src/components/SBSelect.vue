@@ -2,29 +2,33 @@
   <div v-bind="$attrs" class="group py-1" @focusout="open = false" tabindex="-1">
     <SBLabel :label="label" :required="required" />
     <div class="flex items-center rounded-lg border text-black text-sm relative" :class="[{ 'bg-slate-50': !disabled, 'bg-slate-100': disabled }]">
-      <div class="grow p-3 cursor-pointer" @click="openSelect()" v-if="!multiple">{{ text }}</div>
-      <div class="grow p-2 flex gap-2" @click="openSelect()" v-if="multiple">
-        <div v-for="(item, i) in list" :key="i" class="bg-slate-300 text-gray-800 rounded-full py-1 px-2 text-xs">
-          {{ item.label ?? item }} <i class="mx-2 fa-solid fa-xmark cursor-pointer" @click="remove(i)"></i>
+      <div :class="[{ 'py-3': !dense }, { 'py-2': dense }]" class="px-2 grow cursor-pointer" @click="openSelect()" v-if="!multiple">{{ text }}</div>
+      <div :class="[{ 'py-2': !dense }, { 'py-1': dense }]" class="px-2 grow flex gap-1" @click="openSelect()" v-if="multiple">
+        <div v-for="(item, i) in list" :key="i" class="">
+          <span class="bg-gray-300 text-gray-800 rounded-lg py-1 px-2 text-xs" v-if="i <= 1">
+            {{ item.label ?? item }} <i class="fa-solid fa-xmark cursor-pointer" @click="remove(i)"></i>
+          </span>
+          <span class="bg-gray-300 text-gray-800 rounded-lg py-1 px-2 text-xs" v-if="i == 2"> +{{ list.length - 2 }} </span>
         </div>
       </div>
 
-      <div class="absolute top-full left-0 z-50 bg-white w-full border max-h-32 rounded-lg overflow-y-scroll" v-if="open">
+      <div class="absolute top-full left-0 z-50 bg-white w-full max-h-32 border rounded-lg overflow-y-scroll" v-if="open">
         <div
           v-for="(item, index) in items"
           :key="index"
-          class="p-2 hover:bg-slate-50 cursor-pointer"
+          class="p-2 hover:bg-slate-50 cursor-pointer flex gap-x-2 items-center"
           :class="[{ 'bg-slate-100': item.value ? item.value == inputValue : item == inputValue }]"
           @click="select(item)">
+          <div class="size-4 rounded" :class="[{ 'bg-blue-500': list.includes(item) }, { 'bg-gray-200': !list.includes(item) }]" v-if="multiple" />
           {{ item.label ?? item }}
         </div>
       </div>
-      <span class="p-3 border-l cursor-pointer" @click="open = !open && !disabled">
+      <span :class="[{ 'py-3': !dense }, { 'py-2': dense }]" class="px-2 border-l cursor-pointer" @click="open = !open && !disabled">
         <i class="fa-solid fa-chevron-down" v-if="!open"></i>
         <i class="fa-solid fa-chevron-up" v-if="open"></i>
       </span>
 
-      <span class="p-3 border-l cursor-pointer" @click="clear" v-if="inputValue != null && !disabled && clearable">
+      <span :class="[{ 'py-3': !dense }, { 'py-2': dense }]" class="px-2 border-l cursor-pointer" @click="clear" v-if="inputValue != null && !disabled && clearable">
         <i class="fa-solid fa-xmark"></i>
       </span>
     </div>
@@ -42,6 +46,7 @@ export default {
   props: {
     label: String,
     required: Boolean,
+    dense: { type: Boolean, default: false },
     modelValue: [String, Number],
     disabled: {
       type: Boolean,
@@ -83,6 +88,10 @@ export default {
       } else {
         if (!this.list.includes(item)) {
           this.list.push(item)
+        } else {
+          this.list = this.list.filter(function (el) {
+            return el !== item
+          })
         }
         this.inputValue = this.list
       }

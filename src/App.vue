@@ -41,9 +41,15 @@
         <div class="grid grid-cols-4 gap-5 border-y py-3 my-3">
           <SBDate v-model="object.date" label="Data" />
           <SBDate v-model="object.dateRange" label="Data com Range" range />
+        </div>
+        <h1 class="text-xl font-bold">Select</h1>
+        <div class="grid grid-cols-4 gap-5 border-y py-3 my-3">
           <SBSelect v-model="object.selectSimples" label="Select Simples" :items="selectSimples" />
           <SBSelect v-model="object.selectObject" label="Select Objetos" :items="selectObject" />
           <SBSelect v-model="object.selectList" multiple label="Select Multiplo" :items="selectSimples" />
+        </div>
+        <h1 class="text-xl font-bold">Checkbox e Radio</h1>
+        <div class="grid grid-cols-4 gap-5 border-y py-3 my-3">
           <SBCheck v-model="object.check" label="Checkbox" status="Ativo" />
           <SBRadioGroup label="Radio Group">
             <SBRadio v-model="object.radio" label="Banana" value="Banana" />
@@ -55,10 +61,6 @@
         <div class="border-y py-3 my-3">
           <SBTextArea label="Texto" />
         </div>
-
-        <div class="grid grid-cols-4 gap-5"></div>
-
-        <SBRequiredLabel class="py-3" />
 
         <SBForm v-model="valid" class="mb-3">
           <h1 class="py-5 text-xl font-bold">Formulário com Regras de validação no front</h1>

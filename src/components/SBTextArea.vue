@@ -24,10 +24,13 @@
 
 <script>
 import { defineComponent } from 'vue'
+import SBLabel from '@/components/SBLabel.vue'
 
 export default defineComponent({
   name: 'SBTextArea',
-
+  components: {
+    SBLabel,
+  },
   props: {
     divClass: String,
     label: String,
