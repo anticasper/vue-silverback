@@ -12,17 +12,19 @@
         </div>
       </div>
 
-      <div class="absolute top-full left-0 z-50 bg-white w-full max-h-32 border rounded-lg overflow-y-scroll" v-if="open">
-        <div
-          v-for="(item, index) in items"
-          :key="index"
-          class="p-2 hover:bg-slate-50 cursor-pointer flex gap-x-2 items-center"
-          :class="[{ 'bg-slate-100': item.value ? item.value == inputValue : item == inputValue }]"
-          @click="select(item)">
-          <div class="size-4 rounded" :class="[{ 'bg-blue-500': list.includes(item) }, { 'bg-gray-200': !list.includes(item) }]" v-if="multiple" />
-          {{ item.label ?? item }}
+      <TransitionX>
+        <div class="absolute top-full left-0 z-50 bg-white w-full max-h-32 border rounded-lg overflow-y-scroll" v-if="open">
+          <div
+            v-for="(item, index) in items"
+            :key="index"
+            class="p-2 hover:bg-slate-50 cursor-pointer flex gap-x-2 items-center"
+            :class="[{ 'bg-slate-100': item.value ? item.value == inputValue : item == inputValue }]"
+            @click="select(item)">
+            <div class="size-4 rounded" :class="[{ 'bg-blue-500': list.includes(item) }, { 'bg-gray-200': !list.includes(item) }]" v-if="multiple" />
+            {{ item.label ?? item }}
+          </div>
         </div>
-      </div>
+      </TransitionX>
       <span :class="[{ 'py-3': !dense }, { 'py-2': dense }]" class="px-2 border-l cursor-pointer" @click="open = !open && !disabled">
         <i class="fa-solid fa-chevron-down" v-if="!open"></i>
         <i class="fa-solid fa-chevron-up" v-if="open"></i>
@@ -37,11 +39,13 @@
 
 <script>
 import SBLabel from '@/components/SBLabel.vue'
+import TransitionX from '@/components/TransitionX.vue'
 
 export default {
   name: 'SBSelect',
   components: {
     SBLabel,
+    TransitionX,
   },
   props: {
     label: String,
@@ -83,24 +87,22 @@ export default {
     },
     select(item) {
       if (!this.multiple) {
-        this.inputValue = item.value ?? item
-        this.text = item.label ? `${item.value} - ${item.label}` : item
+        this.inputValue = item.value ? item.value : item
+        this.text = item.label ? item.label : item
       } else {
-        if (!this.list.includes(item)) {
+        if (!this.list.some((listItem) => listItem.value === item.value && listItem.label === item.label) || !this.list.includes(item)) {
           this.list.push(item)
         } else {
           this.list = this.list.filter(function (el) {
             return el !== item
           })
         }
+
         this.inputValue = this.list
       }
       this.open = false
+      this.update()
     },
-    update() {
-      this.$emit('update:modelValue', this.inputValue)
-    },
-
     remove(index) {
       this.list.splice(index, 1)
       this.inputValue = this.list
@@ -108,6 +110,9 @@ export default {
       if (this.list.length === 0) {
         this.inputValue = null
       }
+    },
+    update() {
+      this.$emit('update:modelValue', this.inputValue)
     },
 
     updateValue() {
@@ -169,3 +174,12 @@ export default {
   },
 }
 </script>
+<style>
+.rotated-icon-select {
+  transform: rotate(-180deg);
+  transition: transform 0.3s ease ease-out;
+}
+.fas {
+  transition: transform 0.3s ease-out;
+}
+</style>
