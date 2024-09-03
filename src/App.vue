@@ -2,7 +2,7 @@
 <template>
   <div class="bg-gray-900 h-full py-5">
     <div class="container mx-auto">
-      <SBCard>
+      <SBCard class="p-5">
         <img src="@/assets/silverback.png" />
         <hr class="my-3" />
         <SBTitle title="Vue Silverback">
@@ -97,6 +97,10 @@
           <SBTextArea label="Texto" />
         </div>
 
+        <div class="border-y py-3 my-3">
+          <SBSlider label="Slider" :min="13" :max="26" />
+        </div>
+
         <SBForm v-model="valid" class="mb-3">
           <h1 class="py-5 text-xl font-bold">Formulário com Regras de validação no front</h1>
           <div class="grid grid-cols-4 gap-5">
@@ -105,8 +109,11 @@
           </div>
         </SBForm>
         <SBButton label="Salvar" blue icon="fa-solid fa-floppy-disk" :disabled="!valid" @click="testSend()" />
+        <SBButton label="Cancelar" red outlined icon="fa-solid fa-x" class="mx-2" />
+      </SBCard>
 
-        <h1 class="pt-5 text-2xl border-t mt-5">TimeLine Componente</h1>
+      <SBCard class="my-5 p-5">
+        <h1 class="text-2xl">TimeLine Componente</h1>
         <SBTimeline class="p-5" :items="history">
           <template v-slot:date="{ item }">
             <div class="bg-blue-500 text-white rounded px-2 py-1">
@@ -114,16 +121,15 @@
             </div>
           </template>
           <template v-slot:box="{ item }">
-            <SBCard class="mb-5">
+            <SBCard class="mb-5 p-5">
               {{ item.box }}
             </SBCard>
           </template>
         </SBTimeline>
-
-        <SBModal v-model="modalExample">
-          <template v-slot:default> ERRO </template>
-        </SBModal>
       </SBCard>
+      <SBModal v-model="modalExample">
+        <template v-slot:default> ERRO </template>
+      </SBModal>
     </div>
   </div>
 </template>
@@ -147,6 +153,7 @@ import SBNavigationBar from './components/SBNavigationBar.vue'
 import SBRadio from './components/SBRadio.vue'
 import SBRadioGroup from './components/SBRadioGroup.vue'
 import SBSelect from './components/SBSelect.vue'
+import SBSlider from './components/SBSlider.vue'
 import SBStatusCircle from './components/SBStatusCircle.vue'
 import SBStatusPill from './components/SBStatusPill.vue'
 import SBTable from './components/SBTable.vue'
@@ -177,6 +184,7 @@ export default {
     SBRadio,
     SBRadioGroup,
     SBSelect,
+    SBSlider,
     SBStatusCircle,
     SBStatusPill,
     SBTable,
