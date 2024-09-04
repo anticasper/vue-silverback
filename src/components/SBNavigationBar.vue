@@ -1,5 +1,5 @@
 <template>
-  <nav v-if="!disablePagination" class="flex justify-between items-center p-5">
+  <nav v-if="!disablePagination" class="flex justify-between items-center px-3">
     <div class="text-gray-500">
       Exibindo <b>{{ totalPages > 1 ? modelValue * limit - limit + 1 : modelValue * itemsPerPage - itemsPerPage + 1 }}</b> à
       <b>{{ modelValue * limit - (limit - itemsPerPage) }}</b> de <b>{{ totalItems }}</b> itens.

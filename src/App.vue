@@ -13,6 +13,9 @@
             <SBButton blue>Botão de Ação</SBButton>
           </template>
         </SBTitle>
+      </SBCard>
+
+      <SBCard class="my-5 p-5">
         <h1 class="text-xl font-bold">Input</h1>
         {{ object.mask }}
         <div class="grid grid-cols-4 gap-5 border-y py-3 my-3">
@@ -146,12 +149,37 @@
           </template>
         </SBModal>
       </SBCard>
+
       <SBCard class="my-5 p-5">
-        <SBTable />
+        <h1 class="text-xl font-bold mb-5">Exemplo de Tabela</h1>
+        <SBTable :items="pessoas.slice(0, 3)" :headers="headers" />
       </SBCard>
+
+      <SBCard class="my-5 p-5">
+        <h1 class="text-xl font-bold mb-5" expanded>Exemplo de Tabela com expansão</h1>
+        <SBTable :items="pessoas.slice(0, 3)" :headers="headers" expanded>
+          <template v-slot:expanded>
+            <div>
+              <img src="https://pbs.twimg.com/media/Dj9rPOJU8AAyNin.jpg" class="w-full" />
+            </div>
+            <div class="p-3 flex flex-col gap-2">
+              <p>
+                <strong>World of Warcraft (WoW)</strong> é um MMORPG (Massively Multiplayer Online Role-Playing Game) lançado em 2004 pela Blizzard Entertainment. O jogo se passa
+                no mundo de <em>Azeroth</em>, onde jogadores assumem o controle de personagens de diversas raças e classes, explorando um vasto universo de fantasia.
+              </p>
+            </div>
+          </template>
+        </SBTable>
+      </SBCard>
+
+      <SBCard class="my-5 p-5">
+        <h1 class="text-xl font-bold mb-5">Exemplo de Tabela Densa</h1>
+        <SBTable :items="pessoas.slice(0, 3)" :headers="headers" dense />
+      </SBCard>
+
       <SBCard class="my-5 p-5">
         <SBForm v-model="valid" class="mb-3">
-          <h1 class="py-5 text-xl font-bold">Formulário com Regras de validação no front</h1>
+          <h1 class="pb-5 text-xl font-bold">Formulário com Regras de validação no front</h1>
           <div class="grid grid-cols-4 gap-5">
             <SBInput v-model="object.rules1" label="Regras a" :rules="[isFarofa, isPequeno]" />
             <SBInput v-model="object.rules2" label="Regras b" :rules="[isMonkey]" />
@@ -164,15 +192,15 @@
 
       <SBCard class="my-5 p-5">
         <h1 class="text-2xl">TimeLine Componente</h1>
-        <SBTimeline class="p-5" :items="history">
+        <SBTimeline class="py-5" :items="history.slice(0, 3)">
           <template v-slot:date="{ item }">
-            <div class="bg-blue-500 text-white rounded px-2 py-1">
+            <div class="bg-blue-500 text-white rounded px-2 py-1 text-center">
               {{ item.date }}
             </div>
           </template>
-          <template v-slot:box="{ item }">
-            <SBCard class="mb-5 p-5">
-              {{ item.box }}
+          <template v-slot:content="{ item }">
+            <SBCard class="p-5">
+              {{ item.content }}
             </SBCard>
           </template>
         </SBTimeline>
@@ -320,20 +348,27 @@ export default {
       { id: 19, nome: 'Renato Dias', idade: 32, time: 'Coritiba', classe: 'Samurai' },
       { id: 20, nome: 'Gabriela Monteiro', idade: 29, time: 'Avaí', classe: 'Bruxa' },
     ],
+    headers: [
+      { title: 'ID', field: 'id' },
+      { title: 'Nome', field: 'nome' },
+      { title: 'Idade', field: 'idade' },
+      { title: 'Time', field: 'time' },
+      { title: 'Classe', field: 'classe' },
+    ],
     modalExample: false,
     modalHeaderExample: false,
     modalSpecial: false,
     valid: false,
     history: [
-      { date: '2024', box: 'Chere' },
-      { date: '2023', box: 'Chere' },
-      { date: '2022', box: 'Chere' },
-      { date: '2021', box: 'Chere' },
-      { date: '2020', box: 'Chere' },
-      { date: '2019', box: 'Chere' },
-      { date: '2018', box: 'Chere' },
-      { date: '2017', box: 'Chere' },
-      { date: '2016', box: 'Chere' },
+      { date: '2024', content: 'Chere' },
+      { date: '2023', content: 'Chere' },
+      { date: '2022', content: 'Chere' },
+      { date: '2021', content: 'Chere' },
+      { date: '2020', content: 'Chere' },
+      { date: '2019', content: 'Chere' },
+      { date: '2018', content: 'Chere' },
+      { date: '2017', content: 'Chere' },
+      { date: '2016', content: 'Chere' },
     ],
   }),
   methods: {
