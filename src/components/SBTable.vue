@@ -9,9 +9,7 @@
               <i :class="[handleIconsClass(header), 'cursor-pointer']" v-if="header.title != 'Ações' && !header.disableOrder" @click="this.handleHeaderClick(header)"></i>
             </div>
           </th>
-          <th v-if="expanded" :class="[{ 'py-3': !dense, 'py-1': dense }]">
-            <i class="fa-solid fa-sort-up"></i>
-          </th>
+          <th v-if="expanded" :class="[{ 'py-3': !dense, 'py-1': dense }]"></th>
         </tr>
       </thead>
 
@@ -27,7 +25,7 @@
                 <slot :name="header.field" :item="item">{{ item[header.field] }}</slot>
               </div>
             </td>
-            <td v-if="expanded">
+            <td v-if="expanded" class="w-4">
               <i class="fa-solid p-2 cursor-pointer" :class="[{ 'fa-sort-up': !item.expanded, 'fa-sort-down': item.expanded }]" @click="item.expanded = !item.expanded"></i>
             </td>
           </tr>
