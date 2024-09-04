@@ -3,7 +3,7 @@
     <SBLabel :label="label" :required="required" />
     <div class="flex items-center rounded-lg border text-black text-sm relative" :class="[{ 'bg-slate-50': !disabled, 'bg-slate-100': disabled }]">
       <div :class="[{ 'py-3': !dense }, { 'py-2': dense }]" class="px-2 grow cursor-pointer" @click="openSelect()" v-if="!multiple">
-        <slot name="selected" :item="inputValue" v-if="inputValue"> {{ text }} </slot>
+        <slot name="selected" :item="selectedObject" v-if="selectedObject"> {{ text }} </slot>
         <span v-else>{{ text }}</span>
       </div>
       <div :class="[{ 'py-2': !dense }, { 'py-1': dense }]" class="px-2 grow flex gap-1" @click="openSelect()" v-if="multiple">
@@ -17,7 +17,7 @@
       </div>
 
       <TransitionX>
-        <div class="absolute top-full left-0 z-50 bg-white w-full max-h-32 border rounded-lg overflow-y-scroll" v-if="open">
+        <div class="absolute top-full left-0 z-50 bg-white w-full border rounded-lg overflow-y-scroll" :class="[boxSize]" v-if="open">
           <div
             v-for="(item, index) in items"
             :key="index"
@@ -78,6 +78,10 @@ export default {
       type: String,
       default: null,
     },
+    boxSize: {
+      type: String,
+      default: 'max-h-32',
+    },
   },
 
   inheritAttrs: false,
@@ -88,6 +92,7 @@ export default {
     open: false,
     text: null,
     list: [],
+    selectedObject: null,
   }),
 
   methods: {
@@ -116,6 +121,8 @@ export default {
         } else {
           this.text = item
         }
+        // Controle de objeto cru
+        this.selectedObject = item
       } else {
         if (this.propValue) {
           if (!this.list.some((listItem) => listItem[this.propValue] === item[this.propValue])) {

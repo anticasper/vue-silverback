@@ -22,55 +22,20 @@
           <SBInput v-model="object.mask" label="Input com Mascara" mask="###.###.###-##" />
           <SBInput v-model="object.password" label="Input Senha" type="password" />
           <SBInput v-model="object.counter" counter label="Input com Contandor" placeholder="Contador com limite" />
-          <SBInput
-            v-model="object.counterMax"
-            counter
-            :maxlength="10"
-            label="Input com Contandor Máximo"
-            placeholder="Contador com limite" />
-          <SBInput
-            v-model="object.counterMin"
-            counter
-            :minlength="10"
-            label="Input com Contandor Mínimo"
-            placeholder="Contador com limite" />
-          <SBInput
-            v-model="object.counterMinMax"
-            counter
-            :minlength="5"
-            :maxlength="10"
-            label="Input com Max e Mínimo"
-            placeholder="Contador com limite" />
+          <SBInput v-model="object.counterMax" counter :maxlength="10" label="Input com Contandor Máximo" placeholder="Contador com limite" />
+          <SBInput v-model="object.counterMin" counter :minlength="10" label="Input com Contandor Mínimo" placeholder="Contador com limite" />
+          <SBInput v-model="object.counterMinMax" counter :minlength="5" :maxlength="10" label="Input com Max e Mínimo" placeholder="Contador com limite" />
           <SBInput v-model="object.preIcon" label="Pre Icon" pre-icon="fa-wand-magic-sparkles" />
           <SBInput v-model="object.posIcon" label="Pos Icon" pos-icon="fa-star" />
           <SBInput v-model="object.posPreIcon" label="All Icon" pre-icon="fa-wand-magic-sparkles" pos-icon="fa-star" />
           <SBInput v-model="object.dense" dense label="Input Denso" />
           <SBInput v-model="object.outlined" outlined label="Input Outlined" />
         </div>
-        <SBSpinner color="purple" />
-        <SBSpinner color="red" />
-        <SBSpinner color="699bf7" />
-        <SBSpinner color="51414F" label="Analisando dados..." />
-        <SBSpinner color="953553" label="Analisando dados..." />
-
         <div class="grid grid-cols-4 gap-5 border-b py-3 my-3">
           <SBInput v-model="object.bgColor" bg-color="bg-blue-500" dark label="Input BG Cor Nomeado" />
-          <SBInput
-            v-model="object.borderColor"
-            border-color="border-yellow-400"
-            label="Input Outlined - Borda com cor nomeada" />
-          <SBInput
-            v-model="object.bgColor"
-            bg-color="bg-blue-200"
-            border-color="border-red-500"
-            dark
-            label="Input BG e Borda cor Nomeado" />
-          <SBInput
-            v-model="object.bgColorIcon"
-            bg-color="bg-blue-500"
-            pre-icon="fa-wand-magic-sparkles"
-            dark
-            label="Input BG Cor Nomeado e Icon" />
+          <SBInput v-model="object.borderColor" border-color="border-yellow-400" label="Input Outlined - Borda com cor nomeada" />
+          <SBInput v-model="object.bgColor" bg-color="bg-blue-200" border-color="border-red-500" dark label="Input BG e Borda cor Nomeado" />
+          <SBInput v-model="object.bgColorIcon" bg-color="bg-blue-500" pre-icon="fa-wand-magic-sparkles" dark label="Input BG Cor Nomeado e Icon" />
         </div>
         <h1 class="text-xl font-bold">DatePicker</h1>
         <div class="grid grid-cols-4 gap-5 border-y py-3 my-3">
@@ -86,9 +51,19 @@
           <SBSelect v-model="object.selectCustomOption" label="Select Custom Option" prop-text="nome" prop-value="id" :items="pessoas">
             <template v-slot:option="{ item }"> {{ item.nome }} é um {{ item.classe }} </template>
           </SBSelect>
-          <SBSelect v-model="object.selectCustomSelect" label="Select Custom Option e custom select" :items="pessoas">
-            <template v-slot:option="{ item }"> {{ item.nome }} é um {{ item.classe }} </template>
-            <template v-slot:selected="{ item }"> {{ item.nome }} torce para {{ item.time }}</template>
+          <SBSelect v-model="object.selectCustomSelect" label="Select Custom Option e custom select" :items="pessoas" prop-value="id" box-size="max-h-64">
+            <template v-slot:option="{ item }">
+              <div class="flex items-center gap-1">
+                <img src="https://wow.zamimg.com/images/wow/icons/large/inv_ability_skyriding_glyph.jpg" class="h-8 rounded-lg" />
+                {{ item.nome }} é um {{ item.classe }}
+              </div>
+            </template>
+            <template v-slot:selected="{ item }">
+              <div class="flex items-center gap-1">
+                <img src="https://wow.zamimg.com/images/wow/icons/large/inv_cape_special_treasure_c_01.jpg" class="h-6 rounded-lg" />
+                {{ item.nome }} torce para {{ item.time }}
+              </div>
+            </template>
           </SBSelect>
         </div>
         <h1 class="text-xl font-bold">Checkbox e Radio</h1>
@@ -105,8 +80,17 @@
           <SBTextArea label="Texto" />
         </div>
 
+        <h1 class="text-xl font-bold">Sliders</h1>
         <div class="border-y py-3 my-3">
           <SBSlider label="Slider" :min="13" :max="26" />
+        </div>
+
+        <h1 class="text-xl font-bold">Spinner</h1>
+        <div class="grid grid-cols-4 gap-5 border-b py-3 my-3">
+          <SBSpinner color="purple" />
+          <SBSpinner color="699bf7" />
+          <SBSpinner color="51414F" label="Analisando dados..." />
+          <SBSpinner color="953553" label="Analisando dados..." />
         </div>
 
         <SBForm v-model="valid" class="mb-3">
