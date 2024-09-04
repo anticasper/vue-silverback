@@ -61,7 +61,7 @@ export default {
       return 'bg-red-500 hover:bg-red-600'
     },
     yellowClass() {
-      return 'bg-yellow-500 hover:bg-yellow-600'
+      return 'bg-yellow-400 hover:bg-yellow-300'
     },
     blueBorderClass() {
       return 'border border-blue-600 hover:border-blue-700 text-blue-600'
@@ -73,7 +73,7 @@ export default {
       return 'border border-red-500 hover:border-red-600 text-red-500'
     },
     yellowBorderClass() {
-      return ' border border-yellow-500 hover:border-yellow-600 text-yellow-500'
+      return ' border border-yellow-400 hover:border-yellow-300 text-yellow-400'
     },
   },
 }

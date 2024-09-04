@@ -93,6 +93,63 @@
           <SBSpinner color="953553" label="Analisando dados..." />
         </div>
 
+        <h1 class="text-xl font-bold">Modais</h1>
+        <div class="grid grid-cols-4 gap-5 border-b py-3 my-3">
+          <SBButton label="Modal Simples" blue @click="modalExample = true" />
+          <SBButton label="Modal com Slots" blue @click="modalHeaderExample = true" />
+          <SBButton label="Modal Personalizada" green @click="modalSpecial = true" />
+        </div>
+
+        <SBModal v-model="modalExample">
+          <template v-slot:default> Modal Simples </template>
+        </SBModal>
+
+        <SBModal v-model="modalHeaderExample">
+          <template v-slot:header>
+            <div class="text-xl font-bold text-blue-700">Cabeçalho</div>
+          </template>
+          <template v-slot:default>
+            <div class="py-5 my-5 border-y">
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur consequatur eos obcaecati nobis, id eum asperiores? Labore, accusamus! Alias ipsa eos laborum
+              ipsam repudiandae. Rem laboriosam placeat quasi officia eligendi!
+            </div>
+          </template>
+          <template v-slot:footer>
+            <SBButton label="Fechar" red @click="modalHeaderExample = false" />
+          </template>
+        </SBModal>
+
+        <SBModal v-model="modalSpecial" class="p-0 border-0">
+          <template v-slot:header>
+            <div>
+              <img src="https://pbs.twimg.com/media/Dj9rPOJU8AAyNin.jpg" />
+            </div>
+          </template>
+          <template v-slot:default>
+            <div class="p-3 flex flex-col gap-2">
+              <p>
+                <strong>World of Warcraft (WoW)</strong> é um MMORPG (Massively Multiplayer Online Role-Playing Game) lançado em 2004 pela Blizzard Entertainment. O jogo se passa
+                no mundo de <em>Azeroth</em>, onde jogadores assumem o controle de personagens de diversas raças e classes, explorando um vasto universo de fantasia.
+              </p>
+              <p>
+                No WoW, os jogadores podem se aventurar em masmorras, participar de batalhas épicas entre facções, completar missões e interagir com outros jogadores em um ambiente
+                rico e imersivo. Com uma história envolvente e expansões regulares, World of Warcraft continua a ser um dos jogos online mais populares de todos os tempos.
+              </p>
+              <p>Se você é um fã de jogos de fantasia, World of Warcraft oferece uma experiência única, cheia de aventuras e desafios.</p>
+            </div>
+          </template>
+          <template v-slot:footer>
+            <div class="p-3 border-t flex gap-2">
+              <SBButton label="BarraDois" yellow @click="modalSpecial = false" />
+              <SBButton label="Fechar" red @click="modalSpecial = false" />
+            </div>
+          </template>
+        </SBModal>
+      </SBCard>
+      <SBCard class="my-5 p-5">
+        <SBTable />
+      </SBCard>
+      <SBCard class="my-5 p-5">
         <SBForm v-model="valid" class="mb-3">
           <h1 class="py-5 text-xl font-bold">Formulário com Regras de validação no front</h1>
           <div class="grid grid-cols-4 gap-5">
@@ -120,9 +177,6 @@
           </template>
         </SBTimeline>
       </SBCard>
-      <SBModal v-model="modalExample">
-        <template v-slot:default> ERRO </template>
-      </SBModal>
     </div>
   </div>
 </template>
@@ -267,6 +321,8 @@ export default {
       { id: 20, nome: 'Gabriela Monteiro', idade: 29, time: 'Avaí', classe: 'Bruxa' },
     ],
     modalExample: false,
+    modalHeaderExample: false,
+    modalSpecial: false,
     valid: false,
     history: [
       { date: '2024', box: 'Chere' },

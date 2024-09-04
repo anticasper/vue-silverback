@@ -1,17 +1,19 @@
 <template>
-  <div tabindex="-1" class="py-10 overflow-x-hidden fixed z-50 w-screen h-[100vh] inset-0 bg-slate-400 bg-opacity-75 transition-opacity" v-if="inputValue">
+  <div class="py-10 overflow-x-hidden fixed z-50 w-screen h-[100vh] inset-0 bg-slate-400 bg-opacity-75 transition-opacity" v-if="inputValue" tabindex="-1">
     <div class="flex justify-center items-center p-4 w-full min-h-screen">
-      <SBCard :class="size">
-        <div class="flex justify-between pb-2 mb-3 border-b" v-if="header">
-          <b>{{ title }}</b>
-          <i class="fa-solid fa-x cursor-pointer" @click="update"></i>
-        </div>
+      <SBCard :class="size" v-bind="$attrs" class="p-3 overflow-hidden">
+        <slot name="header">
+          <div class="flex justify-between pb-2 mb-3 border-b" v-if="header">
+            <b>{{ title }}</b>
+            <i class="fa-solid fa-x cursor-pointer" @click="update"></i>
+          </div>
+        </slot>
         <div>
           <slot></slot>
         </div>
-        <div class="flex gap-3 justify-end pt-3 mt-3">
-          <slot name="footer" />
-        </div>
+        <slot name="footer">
+          <div class="flex gap-3 justify-end pt-3 mt-3"></div>
+        </slot>
       </SBCard>
     </div>
   </div>
