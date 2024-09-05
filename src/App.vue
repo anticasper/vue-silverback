@@ -17,7 +17,6 @@
 
       <SBCard class="my-5 p-5">
         <h1 class="text-xl font-bold">Input</h1>
-        {{ object.mask }}
         <div class="grid grid-cols-4 gap-5 border-y py-3 my-3">
           <!-- Campos -->
           <SBInput v-model="object.basic" label="Input Básico" />
@@ -40,11 +39,15 @@
           <SBInput v-model="object.bgColor" bg-color="bg-blue-200" border-color="border-red-500" dark label="Input BG e Borda cor Nomeado" />
           <SBInput v-model="object.bgColorIcon" bg-color="bg-blue-500" pre-icon="fa-wand-magic-sparkles" dark label="Input BG Cor Nomeado e Icon" />
         </div>
+      </SBCard>
+      <SBCard class="my-5 p-5">
         <h1 class="text-xl font-bold">DatePicker</h1>
         <div class="grid grid-cols-4 gap-5 border-y py-3 my-3">
           <SBDate v-model="object.date" label="Data" />
           <SBDate v-model="object.dateRange" label="Data com Range" range />
         </div>
+      </SBCard>
+      <SBCard class="my-5 p-5">
         <h1 class="text-xl font-bold">Select</h1>
         <div class="grid grid-cols-4 gap-5 border-y py-3 my-3">
           <SBSelect v-model="object.selectSimples" label="Select Simples" :items="selectSimples" />
@@ -69,6 +72,8 @@
             </template>
           </SBSelect>
         </div>
+      </SBCard>
+      <SBCard class="my-5 p-5">
         <h1 class="text-xl font-bold">Checkbox e Radio</h1>
         <div class="grid grid-cols-4 gap-5 border-y py-3 my-3">
           <SBCheck v-model="object.check" label="Checkbox" status="Ativo" />
@@ -82,7 +87,8 @@
         <div class="border-y py-3 my-3">
           <SBTextArea label="Texto" />
         </div>
-
+      </SBCard>
+      <SBCard class="my-5 p-5">
         <h1 class="text-xl font-bold">Sliders</h1>
         <div class="border-y py-3 my-3">
           <SBSlider label="Slider" :min="0" :max="100" />
@@ -148,6 +154,20 @@
             </div>
           </template>
         </SBModal>
+      </SBCard>
+
+      <SBCard class="my-5 p-5">
+        <h1 class="text-xl font-bold">Zoom</h1>
+        <div class="grid grid-cols-4 gap-5 border-y py-3 my-3">
+          <SBInputZoom v-model="object.zoom" label="Input Zoom Básico" prop-text="nome" prop-value="id" :items="pessoas" :headers="headers" />
+          <SBInputZoom v-model="object.zoom2" label="Input Zoom Custom Select" prop-value="id" :items="pessoas" :headers="headers">
+            <template v-slot:selected="{ item }"> Era uma vez {{ item.nome }} </template>
+          </SBInputZoom>
+          <SBInputZoom v-model="object.zoom3" label="Input Zoom selecionando objeto" prop-text="classe" :items="pessoas" :headers="headers" />
+          <SBInputZoom v-model="object.zoom4" label="Input Zoom Custom Modal">
+            <template v-slot:default> Teste de Modal </template>
+          </SBInputZoom>
+        </div>
       </SBCard>
 
       <SBCard class="my-5 p-5">
