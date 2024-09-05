@@ -85,7 +85,7 @@
 
         <h1 class="text-xl font-bold">Sliders</h1>
         <div class="border-y py-3 my-3">
-          <SBSlider label="Slider" :min="13" :max="26" />
+          <SBSlider label="Slider" :min="0" :max="100" />
         </div>
 
         <h1 class="text-xl font-bold">Spinner</h1>
@@ -191,6 +191,24 @@
       </SBCard>
 
       <SBCard class="my-5 p-5">
+        <h1 class="text-xl font-bold">Componentes Visuais</h1>
+        <div class="grid grid-cols-4 gap-5 border-b py-3 my-3">
+          <div>
+            <SBBadge content="10">Teste 1</SBBadge>
+          </div>
+          <div>
+            <SBBadge content="10" color="bg-indigo-500" dark class="mr-2">Teste com cor e dark</SBBadge>
+          </div>
+          <div>
+            <SBPill color="bg-blue-500" dark> Teste de Pill 1 </SBPill>
+          </div>
+          <div>
+            <SBPill color="bg-red-500" dark block> Teste de Pill 2 </SBPill>
+          </div>
+        </div>
+      </SBCard>
+
+      <SBCard class="my-5 p-5">
         <h1 class="text-2xl">TimeLine Componente</h1>
         <SBTimeline class="py-5" :items="history.slice(0, 3)">
           <template v-slot:date="{ item }">
@@ -210,6 +228,7 @@
 </template>
 
 <script>
+import SBBadge from './components/SBBadge.vue'
 import SBBreadcrumb from './components/SBBreadcrumb.vue'
 import SBButton from './components/SBButton.vue'
 import SBCalendar from './components/SBCalendar.vue'
@@ -225,6 +244,7 @@ import SBLoader from './components/SBLoader.vue'
 import SBModal from './components/SBModal.vue'
 import SBNavButton from './components/SBNavButton.vue'
 import SBNavigationBar from './components/SBNavigationBar.vue'
+import SBPill from './components/SBPill.vue'
 import SBRadio from './components/SBRadio.vue'
 import SBRadioGroup from './components/SBRadioGroup.vue'
 import SBSelect from './components/SBSelect.vue'
@@ -241,6 +261,7 @@ import SBSpinner from './components/SBSpinner.vue'
 
 export default {
   components: {
+    SBBadge,
     SBBreadcrumb,
     SBButton,
     SBCalendar,
@@ -256,6 +277,7 @@ export default {
     SBModal,
     SBNavButton,
     SBNavigationBar,
+    SBPill,
     SBRadio,
     SBRadioGroup,
     SBSelect,

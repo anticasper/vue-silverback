@@ -104,6 +104,7 @@ export default defineComponent({
   [&::-webkit-slider-thumb]:transition-all
   [&::-webkit-slider-thumb]:duration-150
   [&::-webkit-slider-thumb]:ease-in-out
+  [&::-webkit-slider-thumb]:cursor-pointer
 
   [&::-moz-range-thumb]:w-2.5
   [&::-moz-range-thumb]:h-2.5
@@ -115,6 +116,7 @@ export default defineComponent({
   [&::-moz-range-thumb]:transition-all
   [&::-moz-range-thumb]:duration-150
   [&::-moz-range-thumb]:ease-in-out
+  [&::-moz-range-thumb]:cursor-pointer
 
   [&::-webkit-slider-runnable-track]:w-full
   [&::-webkit-slider-runnable-track]:h-2
