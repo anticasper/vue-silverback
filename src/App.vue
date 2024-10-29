@@ -161,7 +161,7 @@
         <div class="grid grid-cols-4 gap-5 border-y py-3 my-3">
           <SBInputZoom v-model="object.zoom" label="Input Zoom Básico" prop-text="nome" prop-value="id" :items="pessoas" :headers="headers" />
           <SBInputZoom v-model="object.zoom2" label="Input Zoom Custom Select" prop-value="id" :items="pessoas" :headers="headers">
-            <template v-slot:selected="{ item }"> Era uma vez {{ item.nome }} </template>
+            <template v-slot:selected="{ item }"> {{ item.id }} {{ item.nome }} {{ item.time }} </template>
           </SBInputZoom>
           <SBInputZoom v-model="object.zoom3" label="Input Zoom selecionando objeto" prop-text="classe" :items="pessoas" :headers="headers" />
           <SBInputZoom v-model="object.zoom4" label="Input Zoom Custom Modal">

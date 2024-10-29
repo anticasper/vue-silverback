@@ -1,3 +1,5 @@
+import '@/assets/css/style.css'
+
 import SBBadge from './components/SBBadge.vue'
 import SBBreadcrumb from './components/SBBreadcrumb.vue'
 import SBButton from './components/SBButton.vue'
