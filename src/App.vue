@@ -48,6 +48,12 @@
         </div>
       </SBCard>
       <SBCard class="my-5 p-5">
+        <h1 class="text-xl font-bold">Input File</h1>
+        <div class="grid grid-cols-4 gap-5 border-y py-3 my-3">
+          <SBInputFile v-model="object.inputFile" label="Arquivo" />
+        </div>
+      </SBCard>
+      <SBCard class="my-5 p-5">
         <h1 class="text-xl font-bold">Select</h1>
         <div class="grid grid-cols-4 gap-5 border-y py-3 my-3">
           <SBSelect v-model="object.selectSimples" label="Select Simples" :items="selectSimples" />
@@ -258,6 +264,7 @@ import SBDate from './components/SBDate.vue'
 import SBForm from './components/SBForm.vue'
 import SBIconButton from './components/SBIconButton.vue'
 import SBInput from './components/SBInput.vue'
+import SBInputFile from './components/SBInputFile.vue'
 import SBInputZoom from './components/SBInputZoom.vue'
 import SBLabel from './components/SBLabel.vue'
 import SBLoader from './components/SBLoader.vue'
@@ -291,6 +298,7 @@ export default {
     SBForm,
     SBIconButton,
     SBInput,
+    SBInputFile,
     SBInputZoom,
     SBLabel,
     SBLoader,

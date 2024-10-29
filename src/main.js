@@ -9,6 +9,7 @@ import SBDate from '@/components/SBDate.vue'
 import SBForm from '@/components/SBForm.vue'
 import SBIconButton from '@/components/SBIconButton.vue'
 import SBInput from '@/components/SBInput.vue'
+import SBInputFile from '@/components/SBInputFile.vue'
 import SBInputZoom from '@/components/SBInputZoom.vue'
 import SBLabel from '@/components/SBLabel.vue'
 import SBLoader from '@/components/SBLoader.vue'
@@ -42,6 +43,7 @@ app.component('sb-date', SBDate)
 app.component('sb-form', SBForm)
 app.component('sb-icon-button', SBIconButton)
 app.component('sb-input', SBInput)
+app.component('sb-input-file', SBInputFile)
 app.component('sb-input-zoom', SBInputZoom)
 app.component('sb-label', SBLabel)
 app.component('sb-loader', SBLoader)
