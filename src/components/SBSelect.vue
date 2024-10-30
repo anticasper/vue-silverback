@@ -123,26 +123,33 @@ export default {
         }
         // Controle de objeto cru
         this.selectedObject = item
+        this.open = false
+        return this.update()
       } else {
+        console.log('multiple')
         if (this.propValue) {
+          console.log('tem propvalue')
           if (!this.list.some((listItem) => listItem[this.propValue] === item[this.propValue])) {
+            console.log('linha 1')
             this.list.push(item)
           }
         } else if (item.value) {
+          console.log('tem item value')
           if (!this.list.some((listItem) => listItem.value === item.value)) {
             this.list.push(item)
           }
         } else if (!this.list.includes(item)) {
+          console.log('não possui item na lista')
           this.list.push(item)
         } else {
+          console.log('else ')
           this.list = this.list.filter(function (el) {
             return el !== item
           })
         }
         this.inputValue = this.list
+        return
       }
-      this.open = false
-      this.update()
     },
     remove(index) {
       this.list.splice(index, 1)

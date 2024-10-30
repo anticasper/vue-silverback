@@ -3,7 +3,7 @@
   <div class="bg-gray-900 h-full py-5">
     <div class="container mx-auto">
       <SBCard class="p-5">
-        <img src="@/assets/silverback.png" />
+        <img src="@/assets/silverback.png" height="160px" />
         <hr class="my-3" />
         <SBTitle title="Vue Silverback">
           <template v-slot:breadcrumb>
@@ -40,6 +40,7 @@
           <SBInput v-model="object.bgColorIcon" bg-color="bg-blue-500" pre-icon="fa-wand-magic-sparkles" dark label="Input BG Cor Nomeado e Icon" />
         </div>
       </SBCard>
+
       <SBCard class="my-5 p-5">
         <h1 class="text-xl font-bold">DatePicker</h1>
         <div class="grid grid-cols-4 gap-5 border-y py-3 my-3">
@@ -47,12 +48,14 @@
           <SBDate v-model="object.dateRange" label="Data com Range" range />
         </div>
       </SBCard>
+
       <SBCard class="my-5 p-5">
         <h1 class="text-xl font-bold">Input File</h1>
         <div class="grid grid-cols-4 gap-5 border-y py-3 my-3">
           <SBInputFile v-model="object.inputFile" label="Arquivo" />
         </div>
       </SBCard>
+
       <SBCard class="my-5 p-5">
         <h1 class="text-xl font-bold">Select</h1>
         <div class="grid grid-cols-4 gap-5 border-y py-3 my-3">
@@ -79,6 +82,7 @@
           </SBSelect>
         </div>
       </SBCard>
+
       <SBCard class="my-5 p-5">
         <h1 class="text-xl font-bold">Checkbox e Radio</h1>
         <div class="grid grid-cols-4 gap-5 border-y py-3 my-3">
@@ -94,6 +98,7 @@
           <SBTextArea label="Texto" />
         </div>
       </SBCard>
+
       <SBCard class="my-5 p-5">
         <h1 class="text-xl font-bold">Sliders</h1>
         <div class="border-y py-3 my-3">
