@@ -85,8 +85,6 @@ export default {
     },
   },
 
-  inject: ['registerError'],
-
   data: () => ({
     inputValue: '',
     error: null,
@@ -220,6 +218,10 @@ export default {
 
   created() {
     this.inputValue = this.modelValue
+
+    if (this.$parent?.registerError) {
+      this.registerError = this.$parent.registerError
+    }
   },
   mounted() {
     if (this.borderColor && this.borderColor.includes('border')) {

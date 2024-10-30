@@ -82,8 +82,8 @@ export default {
     label: String,
     borderColor: String,
     bgColor: String,
-    maxlength: String,
-    minlength: String,
+    maxlength: [String, Number],
+    minlength: [String, Number],
     modelValue: [String, Number],
     placeholder: String,
     required: Boolean,
@@ -116,7 +116,7 @@ export default {
     },
   },
 
-  inject: ['registerError'],
+  // inject: ['registerError'],
 
   data: () => ({
     inputValue: '',
@@ -203,7 +203,9 @@ export default {
           error = true
         }
       }
-      this.indice = this.registerError(error, this.indice)
+      if (this.registerError) {
+        this.indice = this.registerError(error, this.indice)
+      }
       this.error = error
     },
     updateType() {
@@ -238,6 +240,11 @@ export default {
 
   created() {
     this.inputValue = this.modelValue
+
+    // Injetar registerError condicionalmente
+    if (this.$parent?.registerError) {
+      this.registerError = this.$parent.registerError
+    }
   },
   mounted() {
     if (this.borderColor && this.borderColor.includes('border')) {

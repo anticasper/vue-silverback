@@ -7,50 +7,50 @@
     <div>
       <ul v-if="totalPages > 1" class="inline-flex items-center h-10 rounded-lg border divide-x">
         <li :class="{ [disableClass]: currentPage === 1 }" @click="previousPage">
-          <NavButton class="border-e-0 rounded-s-lg" icon="fa-solid fa-chevron-left mx-3" />
+          <SBNavButton class="border-e-0 rounded-s-lg" icon="fa-solid fa-chevron-left mx-3" />
         </li>
 
         <div v-if="totalPages < 5" class="flex items-center divide-x">
           <li v-for="i in totalPages" :key="i" @click="goToPage(i)">
             <!-- class="{ activeClass: i === currentPage, [disableClass]: i > totalPages }" -->
-            <NavButton>
+            <SBNavButton>
               {{ i }}
-            </NavButton>
+            </SBNavButton>
           </li>
         </div>
 
         <div v-else class="flex items-center divide-x">
           <li @click="goToPage(currentPage == totalPages || currentPage < 3 ? 1 : currentPage - 2)">
-            <NavButton :class="[`${currentPage === 1 ? activeClass : borderClass}`]">
+            <SBNavButton :class="[`${currentPage === 1 ? activeClass : borderClass}`]">
               {{ currentPage == totalPages || currentPage < 3 ? 1 : currentPage - 2 }}
-            </NavButton>
+            </SBNavButton>
           </li>
           <li @click="goToPage(currentPage == totalPages || currentPage < 3 ? 2 : currentPage - 1)">
-            <NavButton :class="[`${currentPage === 2 ? activeClass : borderClass}`]">
+            <SBNavButton :class="[`${currentPage === 2 ? activeClass : borderClass}`]">
               {{ currentPage == totalPages || currentPage < 3 ? 2 : currentPage - 1 }}
-            </NavButton>
+            </SBNavButton>
           </li>
 
           <li v-if="pageCurrentHandler()" @click="goToPage(currentPage < 3 ? 3 : currentPage)">
-            <NavButton :class="[`${currentPage !== 1 && currentPage !== 2 ? activeClass : borderClass}`]"> {{ currentPage < 3 ? 3 : currentPage }} </NavButton>
+            <SBNavButton :class="[`${currentPage !== 1 && currentPage !== 2 ? activeClass : borderClass}`]"> {{ currentPage < 3 ? 3 : currentPage }} </SBNavButton>
           </li>
 
           <li @click="gotToPage(i)">
-            <NavButton> ... </NavButton>
+            <SBNavButton> ... </SBNavButton>
           </li>
           <li v-if="penultimatePage" @click="goToPage(penultimatePage)">
-            <NavButton :class="[`${currentPage === penultimatePage ? activeClass : borderClass}`]">
+            <SBNavButton :class="[`${currentPage === penultimatePage ? activeClass : borderClass}`]">
               {{ penultimatePage }}
-            </NavButton>
+            </SBNavButton>
           </li>
           <li v-if="lastPage" @click="goToPage(lastPage)">
-            <NavButton :class="[`${currentPage === lastPage ? activeClass : borderClass}`]">
+            <SBNavButton :class="[`${currentPage === lastPage ? activeClass : borderClass}`]">
               {{ lastPage }}
-            </NavButton>
+            </SBNavButton>
           </li>
         </div>
         <li :class="{ [disableClass]: currentPage === lastPage }" @click="nextPage">
-          <NavButton class="border-s-0 rounded-e-lg" icon="fa-solid fa-chevron-right mx-3" />
+          <SBNavButton class="border-s-0 rounded-e-lg" icon="fa-solid fa-chevron-right mx-3" />
         </li>
       </ul>
     </div>
@@ -58,8 +58,13 @@
 </template>
 
 <script>
+import SBNavButton from '@/components/SBNavButton'
+
 export default {
   name: 'SBNavigationBar',
+  components: {
+    SBNavButton,
+  },
   props: {
     disablePagination: {
       type: Boolean,

@@ -1,5 +1,5 @@
 <template>
-  <div :class="`mb-3 ${divClass}`">
+  <div :class="`mb-3`">
     <div class="flex justify-between items-center">
       <SBLabel :label="label" :required="required" />
       <div class="text-xs text-gray-300" v-if="inputValue">
